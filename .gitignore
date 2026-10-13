@@ -1,0 +1,28 @@
+# Private activities and output
+/exports/
+/sample.json
+cadence_*.json
+*.fit
+*.tcx
+*.gpx
+!tests/sample.tcx
+*.mov
+*.mp4
+*.webm
+*.png
+*.jpg
+*.jpeg
+*.zip
+# Local runtimes, binary encoders and caches
+/vendor/ffmpeg*
+!/vendor/FFMPEG-LICENSE.txt
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+node_modules/
+.env
+.env.*
+.DS_Store
+/work/
+/dist/

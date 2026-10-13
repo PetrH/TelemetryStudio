@@ -1,0 +1,18 @@
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const vm=require('node:vm');
+const code=fs.readFileSync(__dirname+'/../i18n.js','utf8');
+const saved=new Map();
+const context=vm.createContext({localStorage:{getItem:k=>saved.get(k),setItem:(k,v)=>saved.set(k,v)}});
+vm.runInContext(code,context);const i=context.I18n;
+assert.equal(i.language,'cs');
+i.setLanguage('en');
+assert.equal(i.t('Výkon'),'Power');
+assert.equal(i.t('Úsek {0} → {1} · {2} s','10:00','10:01',60),'Segment 10:00 → 10:01 · 60 s');
+assert.equal(i.t('Export se nezdařil: Neplatný snímek.'),'Export failed: Invalid frame.');
+assert.equal(i.t('custom filename.fit'),'custom filename.fit');
+vm.runInContext(code,context);assert.equal(context.I18n.language,'en');
+i.setLanguage('cs');assert.equal(i.t('Výkon'),'Výkon');
+const blocked=vm.createContext({get localStorage(){throw Error('blocked');}});
+vm.runInContext(code,blocked);blocked.I18n.setLanguage('en');assert.equal(blocked.I18n.language,'en');
+console.log('PASS: language switching, interpolation, nested error translation, persistence, blocked storage.');
