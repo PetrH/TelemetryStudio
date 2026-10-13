@@ -4,6 +4,19 @@
 
 Lokální vibecoded aplikace pro zobrazení telemetrických dat z cyklistiky. Načte **TCX, FIT nebo Cadence JSON**, zobrazí trasu a vytvoří průhledný overlay pro video.
 
+## Screenshots
+
+The screenshots use the included **fictional demo ride**, not a personal activity.
+
+![Telemetry Studio: overlay preview, route selection and export panel](docs/screenshots/workspace-en.jpg)
+
+<details>
+<summary>Appearance, telemetry widgets and map settings</summary>
+
+![Overlay appearance settings with styles, 3-second power, widgets and route modes](docs/screenshots/settings-en.jpg)
+
+</details>
+
 ## Features
 
 - Czech / English GUI switch, remembered in the browser without resetting your activity or selection.
@@ -18,6 +31,21 @@ Lokální vibecoded aplikace pro zobrazení telemetrických dat z cyklistiky. Na
 - Local processing with no accounts or cloud upload.
 
 ## Run
+
+On macOS or Linux, install the runtime dependencies from the project folder:
+
+```sh
+bash scripts/install-deps.sh
+python3 server.py
+```
+
+To check dependencies without installing anything:
+
+```sh
+bash scripts/install-deps.sh --check
+```
+
+The installer supports Homebrew on macOS and apt-get, dnf, pacman or zypper on Linux. It installs Python and FFmpeg using configured repositories, then checks the required encoders. It uses sudo when needed on Linux. On Arch, it runs a full package sync/upgrade to avoid partial upgrades. If Homebrew is missing, it asks before running the official Homebrew installer. Restricted Linux repositories may not provide every codec: the script reports missing packages/encoders rather than enabling extra repositories. A modern browser must already be installed.
 
 Requires **Python 3.9+** and a modern browser. All Python and browser dependencies are included as source; no pip or npm install is needed.
 
@@ -47,7 +75,7 @@ node tests/test_i18n.cjs
 python3 -m unittest discover -s tests -p 'test_*.py'
 ```
 
-The tests use synthetic data and cover FIT byte order, compressed timestamps, units, zeros, missing values, CRC/truncation errors, timestamp precision, telemetry interpolation, power averaging and route geometry. GitHub Actions runs these tests on Linux, macOS and Windows. Browser behavior and long video exports should additionally be checked manually.
+The tests use synthetic data and cover FIT byte order, compressed timestamps, units, zeros, missing values, CRC/truncation errors, timestamp precision, telemetry interpolation, power averaging and route geometry. GitHub Actions runs these tests on Linux, macOS and Windows. Installer tests mock package managers so they never change the test machine. The dependency check was also run on macOS; real Linux package installation still needs verification on the target distribution. Browser behavior and long video exports should additionally be checked manually.
 
 - `core.js` — telemetry model, TCX/JSON parsing, shared preview/export renderer
 - `fit_import.py` — FIT adapter, using `vendor/fitdecode`
@@ -63,7 +91,7 @@ This is a **vibecoded project**: AI-assisted implementation does not imply exhau
 
 TCX/JSON parsing runs in the browser; FIT decoding and video encoding run on the local server. Imported files are not saved by the FIT endpoint. Generated exports remain in `exports/`. OpenStreetMap tiles are the only external requests; the tile provider sees your IP and requested map area. Select “Bez podkladu” to use the route without tiles. The included demo is fictional.
 
-User activities, exports, screenshots, local environments and FFmpeg binaries are excluded by `.gitignore`. The source packaging script uses an explicit allowlist rather than copying the entire working folder:
+User activities, exports, personal screenshots, local environments and FFmpeg binaries are excluded by `.gitignore`. Only the two reviewed demo screenshots in `docs/screenshots/` are explicitly included. The source packaging script uses an explicit allowlist rather than copying the entire working folder:
 
 ```sh
 python3 scripts/package_source.py

@@ -2,6 +2,10 @@
 
 Jazyk přepneš nahoře pomocí „Čeština / English“. Volba se uloží v prohlížeči; načtená aktivita, výběr úseku i rozložení zůstávají zachované. Jazyk GUI nemění texty samotného videooverlaye.
 
+## Instalace závislostí na macOS a Linuxu
+
+Ve složce projektu spusť `bash scripts/install-deps.sh`, potom `python3 server.py`. Pouze kontrola bez instalace: `bash scripts/install-deps.sh --check`. Skript zajistí Python a FFmpeg a ověří enkodéry. Na macOS používá Homebrew; pokud chybí, vyžádá souhlas s jeho instalací. Na Linuxu podporuje apt-get, dnf, pacman a zypper a podle potřeby použije sudo. Na Arch Linuxu proběhne úplná aktualizace balíčků. Některé distribuce nemají všechny kodeky ve výchozích repozitářích; skript to oznámí, další repozitáře sám nepřidává. Prohlížeč musí být nainstalovaný.
+
 ## Použití
 
 1. Načtěte TCX, FIT nebo Cadence JSON. Tlačítko „Otevřít ukázkovou jízdu“ načte syntetická data, nikoli skutečnou aktivitu.

@@ -26,3 +26,7 @@ node_modules/
 .DS_Store
 /work/
 /dist/
+
+# Reviewed screenshots of synthetic demo data
+!/docs/screenshots/workspace-en.jpg
+!/docs/screenshots/settings-en.jpg
